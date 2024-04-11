@@ -1,0 +1,67 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body {
+    padding: 0;
+    margin: 0;
+}
+html, body, #mapid {
+    height: 100%;
+    width: 100%;
+}
+.leaflet-container .leaflet-control-mouseposition {
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 5px #bbb;
+    padding: 0 5px;
+    margin:0;
+    color: #333;
+    font: 11px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+#mapid{
+    position:absolute;
+}
+#search-form{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 400;
+    margin: 130px 10px;
+    background-color: white;
+    border: 2px solid rgba(63, 63, 63, 0.503);
+    border-radius: 3%;
+    padding: 10px;
+}
+.accordion-button:not(.collapsed) {
+    background-color: transparent !important;
+    color: inherit;
+  }
+
+button.accordion-button:focus{
+    box-shadow: inherit;
+}
+
+#loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 500;
+    width: 120px;
+    height: 120px;
+    margin: -76px 0 0 -76px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+  
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
