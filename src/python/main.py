@@ -52,10 +52,11 @@ class Segment:
             vector = r.json()['coverageData'][0]['values'][0][0]
             wind_speed = self._get_wind_speed(vector["u"], vector["v"])
             self.weather_impact['wind_speed'] = wind_speed
+        print(f'http://{PUBLIC_IP}:8007/WCS?SERVICE=WCS&VERSION=2.0.0&REQUEST=GetCoverage&CoverageId=KGFS_Latest_Ground&RANGESUBSET=TotalPrecipitation&SUBSET=f("PT{hours}H")&SUBSET=long({long})&SUBSET=lat({lat})&FORMAT=JSON')
         r = requests.get(f'http://{PUBLIC_IP}:8007/WCS?SERVICE=WCS&VERSION=2.0.0&REQUEST=GetCoverage&CoverageId=KGFS_Latest_Ground&RANGESUBSET=TotalPrecipitation&SUBSET=f("PT{hours}H")&SUBSET=long({long})&SUBSET=lat({lat})&FORMAT=JSON')
         if r.status_code == 200:
             tp = r.json()['coverageData'][0]['values'][0][0]
-            rain = self._to_nearest_half(tp)
+            rain = self._kg_per_m2_to_inches(tp)
             self.weather_impact['total_precipitation'] = rain
 
     def _k_to_f(self, k):
@@ -66,8 +67,10 @@ class Segment:
         ws = ws * 2.237
         return round(ws)
     
-    def _to_nearest_half(self, num):
-        return round(num * 2) / 2
+    def _kg_per_m2_to_inches(self, kg_per_m2):
+        inches = kg_per_m2 * 0.0393701
+        rounded_inches = round(inches, 2)
+        return rounded_inches
     
     def _get_hours(self):
         td = self.valid_time - datetime.datetime.now(datetime.UTC)
